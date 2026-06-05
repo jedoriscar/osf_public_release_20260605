@@ -12,19 +12,40 @@ library(lubridate)
 # Load data
 source("analysis/setup/load_data.R")
 
-# Extract years: comment_year for when comments were posted, video_year for when videos were uploaded
-if ("comment_published_at" %in% colnames(joined_data)) {
-  joined_data$comment_year <- year(joined_data$comment_published_at)
-} else {
-  joined_data$comment_year <- NA
+# Extract years: comment_year for when comments were posted, video_year for when
+# videos were uploaded. Some platforms use video_published_at and others use
+# upload_date, so parse both and fall back row-by-row.
+parse_year <- function(x) {
+  sx <- as.character(x)
+  sx[is.na(x)] <- NA_character_
+  out <- suppressWarnings(year(ymd_hms(sx, quiet = TRUE, tz = "UTC")))
+  miss <- is.na(out)
+  out[miss] <- suppressWarnings(year(ymd(sx[miss], quiet = TRUE)))
+  miss <- is.na(out)
+  out[miss] <- suppressWarnings(year(mdy(sx[miss], quiet = TRUE)))
+  miss <- is.na(out)
+  out[miss] <- suppressWarnings(as.numeric(substr(sx[miss], 1, 4)))
+  out[!is.finite(out)] <- NA_real_
+  out
 }
-if ("video_published_at" %in% colnames(joined_data)) {
-  joined_data$video_year <- year(as.POSIXct(joined_data$video_published_at))
-} else if ("upload_date" %in% colnames(joined_data)) {
-  joined_data$video_year <- year(as.Date(joined_data$upload_date))
+
+joined_data$comment_year <- if ("comment_published_at" %in% colnames(joined_data)) {
+  parse_year(joined_data$comment_published_at)
 } else {
-  joined_data$video_year <- NA
+  NA_real_
 }
+
+video_year_primary <- if ("video_published_at" %in% colnames(joined_data)) {
+  parse_year(joined_data$video_published_at)
+} else {
+  rep(NA_real_, nrow(joined_data))
+}
+video_year_fallback <- if ("upload_date" %in% colnames(joined_data)) {
+  parse_year(joined_data$upload_date)
+} else {
+  rep(NA_real_, nrow(joined_data))
+}
+joined_data$video_year <- ifelse(!is.na(video_year_primary), video_year_primary, video_year_fallback)
 
 # Calculate temporal distribution
 cat("=== TEMPORAL DISTRIBUTION ===\n\n")

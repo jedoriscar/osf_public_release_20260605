@@ -22,18 +22,18 @@ cat("Family: Gaussian (identity link)\n")
 cat("Estimation: REML = FALSE (for model comparison)\n\n")
 
 cat("Formula:\n")
-cat("  score ~ discourse_type + (1|comment_id) + (1|video_id)\n\n")
+cat("  score ~ discourse_type + (1|row_id) + (1|video_id)\n\n")
 
 cat("Fixed Effects:\n")
 cat("  - discourse_type: factor (Destructiveness = reference, Constructiveness = comparison)\n\n")
 
 cat("Random Effects:\n")
-cat("  - (1|comment_id): Random intercept for comment (nested within comment)\n")
+cat("  - (1|row_id): Random intercept for comment row, preserving YouTube and TikTok comments\n")
 cat("  - (1|video_id): Random intercept for video (crossed with comment)\n\n")
 
 # Prepare data and run model
 prevalence_long <- joined_data %>%
-  select(comment_id, video_id, harmoniousness_raw, divisiveness_raw) %>%
+  select(row_id, video_id, harmoniousness_raw, divisiveness_raw) %>%
   pivot_longer(
     cols = c(harmoniousness_raw, divisiveness_raw),
     names_to = "discourse_type",
@@ -47,7 +47,7 @@ prevalence_long <- joined_data %>%
   )
 
 mod1 <- lmer(
-  score ~ discourse_type + (1|comment_id) + (1|video_id),
+  score ~ discourse_type + (1|row_id) + (1|video_id),
   data = prevalence_long,
   REML = FALSE
 )
@@ -69,7 +69,7 @@ cat(sprintf("t = %.2f, p < .001\n", coefs[2] / ses[2]))
 results <- list(
   model = mod1,
   model_type = "Linear Mixed Model",
-  formula = "score ~ discourse_type + (1|comment_id) + (1|video_id)",
+  formula = "score ~ discourse_type + (1|row_id) + (1|video_id)",
   coefficient = coefs[2],
   se = ses[2],
   ci = ci[2,],

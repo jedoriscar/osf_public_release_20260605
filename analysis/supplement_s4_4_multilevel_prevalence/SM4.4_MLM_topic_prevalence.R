@@ -4,7 +4,7 @@
 # Complements the descriptive paired t-test.
 #
 # Reference: SI Appendix Section 4.4, Main text line 72
-# Expected: B = 0.205, SE = 0.004, t = 50.52, p < .001
+# Expected: B = 0.079, SE = 0.005, t = 15.10, p < .001
 
 # Setup
 rm(list = ls())
@@ -20,7 +20,7 @@ cat("N =", nrow(joined_data), "comments\n\n")
 
 # Get topic probability columns
 # Adjust pattern based on actual column names
-topic_cols <- grep("^topic_[0-9]+_prob$", names(joined_data), value = TRUE)
+topic_cols <- grep("^topic_-?\\d+_.*(?<!_z)$", names(joined_data), value = TRUE, perl = TRUE)
 
 if (length(topic_cols) == 0) {
   # Try alternative pattern

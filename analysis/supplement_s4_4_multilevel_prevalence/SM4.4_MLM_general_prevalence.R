@@ -3,7 +3,7 @@
 # accounting for video clustering. Complements the descriptive t-test.
 #
 # Reference: SI Appendix Section 4.4, Main text line 56
-# Expected: B = 0.248, SE = 0.001, t = 364.01, p < .001
+# Expected: B = 0.139, SE = 0.001, t = 176.49, p < .001
 
 # Setup
 rm(list = ls())
@@ -20,7 +20,7 @@ cat("N =", nrow(joined_data), "comments\n\n")
 # Prepare data: reshape to long format
 # Each comment contributes two rows: one for constructiveness, one for destructiveness
 prevalence_long <- joined_data %>%
-  select(comment_id, video_id, harmoniousness_raw, divisiveness_raw) %>%
+  select(row_id, video_id, harmoniousness_raw, divisiveness_raw) %>%
   pivot_longer(
     cols = c(harmoniousness_raw, divisiveness_raw),
     names_to = "discourse_type",
@@ -35,17 +35,17 @@ prevalence_long <- joined_data %>%
 
 cat("Long format data created:\n")
 cat("  Total rows:", nrow(prevalence_long), "\n")
-cat("  Unique comments:", n_distinct(prevalence_long$comment_id), "\n")
+cat("  Unique comments:", n_distinct(prevalence_long$row_id), "\n")
 cat("  Unique videos:", n_distinct(prevalence_long$video_id), "\n\n")
 
 # Model: Multilevel model with crossed random effects
 # DV: discourse score
 # Fixed effect: discourse type (constructiveness vs destructiveness)
-# Random effects: intercepts for comment (since scores nested within comment) and video
+# Random effects: intercepts for row/comment (since scores are paired within comment) and video
 cat("Fitting multilevel model...\n")
 
 mod1 <- lmer(
-  score ~ discourse_type + (1|comment_id) + (1|video_id),
+  score ~ discourse_type + (1|row_id) + (1|video_id),
   data = prevalence_long,
   REML = FALSE
 )
