@@ -35,7 +35,9 @@ joined_data$comment_year <- if ("comment_published_at" %in% colnames(joined_data
   NA_real_
 }
 
-video_year_primary <- if ("video_published_at" %in% colnames(joined_data)) {
+video_year_primary <- if ("video_upload_year" %in% colnames(joined_data)) {
+  as.numeric(joined_data$video_upload_year)
+} else if ("video_published_at" %in% colnames(joined_data)) {
   parse_year(joined_data$video_published_at)
 } else {
   rep(NA_real_, nrow(joined_data))

@@ -1,18 +1,15 @@
-# Goal (SUPPLEMENTAL_ANALYSES §5.1; race as predictor per user)
-# Use all available video-level codes as predictors of constructiveness and
-# destructiveness. Two approaches:
-# 1. If video_framing_codes.csv exists (with video_id): merge and use those codes.
-# 2. Use comment-level content codes in joined_data: aggregate to video level
-#    (mean C, mean D, mean or proportion of each code per video), then run
-#    one model for mean C and one for mean D with all video codes as predictors.
-# Race of video speaker: include as predictor if available; no moderator.
+# Optional video-code sensitivity analysis.
+# This script aggregates any public video/content-code fields available in the
+# analytic data and tests whether they predict video-level mean constructiveness
+# and destructiveness. If no public video-code fields are present, the script
+# records that boundary rather than estimating a model.
 rm(list = ls())
 library(tidyverse)
 
 source("analysis/setup/load_data.R")
 
-# Candidate video-level / content codes (comment-level in data; we aggregate to video)
-# From DATA_DICTIONARY and validation scripts
+# Candidate video-level/content-code fields; comment-level fields are aggregated
+# to video-level means before modeling.
 content_code_candidates <- c(
   "diversity_positive_framing", "diversity_negative_framing",
   "multiracial_positive", "multiracial_negative",
@@ -30,7 +27,7 @@ cat("=== VIDEO CODES PREDICTING C AND D ===\n\n")
 cat("Content-code columns found in joined_data:", length(present_codes), "\n")
 if (length(present_codes) > 0) cat(paste(present_codes, collapse = ", "), "\n\n")
 
-# Optional: external video framing file (e.g. framing_category by video_id)
+# Optional external video-framing file if a reviewer receives it separately.
 framing_file <- "supplemental_materials/04_extracted_data/video_framing_codes.csv"
 video_framing <- NULL
 if (file.exists(framing_file)) {
@@ -42,7 +39,7 @@ if (file.exists(framing_file)) {
     cat("video_framing_codes.csv found but no video_id column; using content codes only.\n")
   }
 } else {
-  cat("No video_framing_codes.csv at", framing_file, "- using content codes from joined_data only.\n")
+  cat("No separate video_framing_codes.csv found; using public data columns only.\n")
 }
 
 # Aggregate to video level: mean C, mean D, and mean of each content code
@@ -70,7 +67,7 @@ pred_cols <- pred_cols[!grepl("^title|^url|^description|^channel", pred_cols, ig
 numeric_preds <- pred_cols[sapply(video_agg[, pred_cols, drop = FALSE], function(x) is.numeric(x) && !all(is.na(x)))]
 if (length(numeric_preds) == 0) {
   cat("No numeric video-code predictors available. Skipping models.\n")
-  cat("If content codes are missing from joined_data_processed.rda, add them in the canonical build.\n")
+  cat("This optional sensitivity model is estimated only when public video/content-code predictors are available.\n")
 } else {
   # Drop rows with any NA in predictors for clean lm
   video_lm <- video_agg %>%

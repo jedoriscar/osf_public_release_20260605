@@ -15,7 +15,7 @@ source("analysis/setup/load_data.R")
 # Moral outrage: must exist in canonical data (Perspective API or pipeline)
 if (!"moral_outrage" %in% colnames(joined_data) && 
     !"prob_moral_outrage" %in% colnames(joined_data)) {
-  stop("Moral outrage column not found. Check column names.")
+  stop("Required moral outrage column not found in the public analytic data.")
 }
 
 # Use whichever column name the canonical data uses

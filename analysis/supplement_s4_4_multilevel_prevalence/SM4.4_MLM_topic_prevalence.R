@@ -111,7 +111,7 @@ topic_means <- topic_weighted %>%
 t_test_result <- t.test(topic_means$constructiveness, topic_means$destructiveness, paired = TRUE)
 
 cat("\n=== COMPARISON WITH DESCRIPTIVE T-TEST ===\n")
-cat("Paired t-test (reported in main text):\n")
+cat("Paired t-test on topic-video aggregated means:\n")
 cat(sprintf("  t(%d) = %.2f, p = %.4f\n", 
             t_test_result$parameter, 
             t_test_result$statistic, 

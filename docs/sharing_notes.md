@@ -2,11 +2,14 @@
 
 The public release is designed to share the data and code needed to inspect and reproduce the reported analyses while protecting raw platform content and user privacy.
 
+Public GitHub repository: https://github.com/jedoriscar/osf_public_release_20260605
+
 ## Included
 
 - Deidentified comment-level datasets.
 - Deidentified parent-child dyad datasets.
 - Derived feature scores and indices used in the analyses.
+- Derived video upload year for temporal summaries, without exact platform timestamps.
 - Redacted stance and agreement labels used in robustness checks.
 - Deleted-comment status inputs used in sensitivity analyses.
 - Human-validation data with raw text removed and coder names replaced by pseudonymous labels.

@@ -34,7 +34,7 @@ if ("compassion" %in% colnames(analysis_data)) {
 } else if ("prob_compassion" %in% colnames(analysis_data)) {
   analysis_data$compassion_binary <- ifelse(analysis_data$prob_compassion >= 0.6, 1, 0)
 } else {
-  stop("Compassion column not found. Check column names.")
+  stop("Required compassion score column not found in the public analytic data.")
 }
 
 # Quick sanity checks

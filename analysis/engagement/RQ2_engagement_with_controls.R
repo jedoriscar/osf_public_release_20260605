@@ -1,7 +1,6 @@
 # Purpose
 # Test whether constructiveness and destructiveness predict engagement outcomes
 # when controlling for sentiment, politeness, and moral outrage.
-# Demonstrates that effects are not confounded by these related constructs.
 #
 # Reference: Main text lines 85-86, SI Appendix Tables S9-S12
 # Models: Same as main models but with additional covariates
@@ -25,61 +24,69 @@ analysis_data <- joined_data %>%
   ) %>%
   filter(!is.na(comment_likes), !is.na(comment_replies))
 
-# Check for control variables
-if (!"sentiment_positive" %in% colnames(analysis_data) ||
-    !"politeness" %in% colnames(analysis_data)) {
-  warning("Control variables may not be in data. Check column names.")
+if (!"sentiment_positive" %in% colnames(analysis_data) && "vader_positive" %in% colnames(analysis_data)) {
+  analysis_data$sentiment_positive <- analysis_data$vader_positive
 }
+if (!"sentiment_negative" %in% colnames(analysis_data) && "vader_negative" %in% colnames(analysis_data)) {
+  analysis_data$sentiment_negative <- analysis_data$vader_negative
+}
+if (!"moral_outrage_binary" %in% colnames(analysis_data)) {
+  if ("label_moral_outrage" %in% colnames(analysis_data)) {
+    analysis_data$moral_outrage_binary <- as.numeric(analysis_data$label_moral_outrage %in% c(1, TRUE, "1", "true", "TRUE"))
+  } else if ("prob_moral_outrage" %in% colnames(analysis_data)) {
+    analysis_data$moral_outrage_binary <- as.numeric(analysis_data$prob_moral_outrage >= 0.6)
+  }
+}
+
+control_vars <- c("sentiment_positive", "sentiment_negative", "politeness", "moral_outrage_binary")
+has_controls <- all(control_vars %in% colnames(analysis_data))
 
 # Model 1: Algorithmic Surfacing with Controls
 cat("=== MODEL 1: ALGORITHMIC SURFACING WITH CONTROLS ===\n")
 
-if ("sentiment_positive" %in% colnames(analysis_data) && 
-    "politeness" %in% colnames(analysis_data)) {
+if (has_controls) {
   mod1_alg <- glmer(
     top_comment_binary ~ harmoniousness_raw + divisiveness_raw + 
-      sentiment_positive + sentiment_negative + politeness + (1|video_id),
+      sentiment_positive + sentiment_negative + politeness + moral_outrage_binary + (1|video_id),
     data = analysis_data,
     family = binomial,
     control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
   )
   summary(mod1_alg)
 } else {
-  cat("Control variables not available. Skipping controlled model.\n")
+  cat("Controlled surfacing model not estimated because one or more public control variables are unavailable.\n")
   mod1_alg <- NULL
 }
 
 # Model 2: Likes with Controls
 cat("\n=== MODEL 2: LIKES WITH CONTROLS ===\n")
 
-if ("sentiment_positive" %in% colnames(analysis_data) && 
-    "politeness" %in% colnames(analysis_data)) {
+if (has_controls) {
   mod1_likes <- glmer.nb(
     comment_likes ~ harmoniousness_raw + divisiveness_raw + 
-      sentiment_positive + sentiment_negative + politeness + (1|video_id),
+      sentiment_positive + sentiment_negative + politeness + moral_outrage_binary + (1|video_id),
     data = analysis_data,
     control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
   )
   summary(mod1_likes)
 } else {
-  cat("Control variables not available. Skipping controlled model.\n")
+  cat("Controlled likes model not estimated because one or more public control variables are unavailable.\n")
   mod1_likes <- NULL
 }
 
 # Model 3: Replies with Controls
 cat("\n=== MODEL 3: REPLIES WITH CONTROLS ===\n")
 
-if ("sentiment_positive" %in% colnames(analysis_data) && 
-    "politeness" %in% colnames(analysis_data)) {
+if (has_controls) {
   mod1_replies <- glmer.nb(
     comment_replies ~ harmoniousness_raw + divisiveness_raw + 
-      sentiment_positive + sentiment_negative + politeness + (1|video_id),
+      sentiment_positive + sentiment_negative + politeness + moral_outrage_binary + (1|video_id),
     data = analysis_data,
     control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
   )
   summary(mod1_replies)
 } else {
-  cat("Control variables not available. Skipping controlled model.\n")
+  cat("Controlled replies model not estimated because one or more public control variables are unavailable.\n")
   mod1_replies <- NULL
 }
 
@@ -94,5 +101,4 @@ results <- list(
 saveRDS(results, "analysis/engagement/RQ2_engagement_with_controls_results.rds")
 
 cat("\n=== RESULTS SAVED ===\n")
-cat("Note: If control variables are missing, models were not fit.\n")
-cat("Check data structure and update column names if needed.\n")
+cat("Control variables used:", paste(control_vars[control_vars %in% colnames(analysis_data)], collapse = ", "), "\n")

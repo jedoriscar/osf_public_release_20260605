@@ -13,7 +13,8 @@ This codebook summarizes the main variables used by the public analysis scripts.
 ## Platform and Timing
 
 - `platform`: YouTube or TikTok.
-- `year`: year used for temporal analyses. Exact timestamps are not included in the public release when they are not needed for the reported models.
+- `video_upload_year`: derived upload year used for video-year temporal analyses. This field is included so temporal tables can be reproduced without exposing exact platform timestamps.
+- `year`: year used by some temporal scripts where already derived. Exact timestamps are not included in the public release when they are not needed for the reported models.
 
 ## Engagement and Surfacing
 

@@ -2,6 +2,8 @@
 
 This folder contains deidentified data, analysis code, validation materials, and figure outputs for the study of constructive and destructive features in online discourse about demographic and climate change.
 
+Public GitHub repository: https://github.com/jedoriscar/osf_public_release_20260605
+
 The materials are organized for public sharing through OSF or GitHub. The folder is intended to let readers inspect the analytic data, rerun the main statistical analyses, and understand which source materials are not public because they contain raw text, platform identifiers, user handles, or other restricted content.
 
 ## Folder Guide

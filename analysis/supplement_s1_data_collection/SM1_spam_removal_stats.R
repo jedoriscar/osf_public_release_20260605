@@ -13,7 +13,7 @@ source("analysis/setup/load_data.R")
 # Check for spam probability column
 if (!"prob_spam" %in% colnames(joined_data) && 
     !"spam_probability" %in% colnames(joined_data)) {
-  stop("Spam probability column not found. Check column names.")
+  stop("Required spam probability column not found in the public analytic data.")
 }
 
 spam_col <- ifelse("prob_spam" %in% colnames(joined_data), "prob_spam", "spam_probability")

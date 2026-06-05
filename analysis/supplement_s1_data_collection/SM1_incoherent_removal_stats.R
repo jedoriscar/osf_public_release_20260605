@@ -13,7 +13,7 @@ source("analysis/setup/load_data.R")
 # Check for incoherent probability column
 if (!"prob_incoherent" %in% colnames(joined_data) && 
     !"incoherent_probability" %in% colnames(joined_data)) {
-  stop("Incoherent probability column not found. Check column names.")
+  stop("Required incoherent probability column not found in the public analytic data.")
 }
 
 incoherent_col <- ifelse("prob_incoherent" %in% colnames(joined_data), 
