@@ -1,0 +1,11 @@
+"feature","category","prevalence_pct","n_above","n_total"
+"Compassion","Constructive",30.0910952197264,30423,101103
+"Curiosity","Constructive",21.4840311365637,21721,101103
+"Nuance","Constructive",11.3231061392837,11448,101103
+"Personal story","Constructive",16.4812122291129,16663,101103
+"Reasoning","Constructive",13.4476721758998,13596,101103
+"Toxicity","Destructive",3.44599072233267,3484,101103
+"Identity attack","Destructive",0.75665410521943,765,101103
+"Threat","Destructive",0.0316508906758454,32,101103
+"Attack on author","Destructive",2.69823843011582,2728,101103
+"Attack on commenter","Destructive",16.152834238351,16331,101103

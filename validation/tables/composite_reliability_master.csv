@@ -1,0 +1,11 @@
+"composite","pair","n","ICC","r"
+"constructiveness","Coder1 × Coder2",298,0.500785955519607,0.536282994804801
+"constructiveness","Coder1 × Model binary mean",298,0.448783053429571,0.654489050859285
+"constructiveness","Coder2 × Model binary mean",300,0.299382103977701,0.531763824195215
+"constructiveness","Coder1 × Model probability mean",298,0.375748452743151,0.711926144029674
+"constructiveness","Coder2 × Model probability mean",300,0.223284256988288,0.55187449451912
+"destructiveness","Coder1 × Coder2",298,0.585724356186184,0.585046211382148
+"destructiveness","Coder1 × Model binary mean",298,0.357704670350015,0.482381319033168
+"destructiveness","Coder2 × Model binary mean",300,0.353258407260713,0.469778922369481
+"destructiveness","Coder1 × Model probability mean",298,0.274541480770013,0.4589743504338
+"destructiveness","Coder2 × Model probability mean",300,0.302351600447812,0.495804021224702

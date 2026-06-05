@@ -1,0 +1,24 @@
+=== (A) FEATURE reliability ===
+Merged file rows: 300
+
+-- A.1 RA-vs-RA agreement, per feature --
+
+-- A.2 RA-vs-model binary agreement --
+
+-- A.3 RA binary vs. model probability --
+
+-- A.4 Composite-index reliability --
+
+=== (B) STANCE reliability ===
+N coded -- Coder1: 32 ; Coder2: 25 (overlap on comment_id: 25)
+RA-vs-RA stance overlap: N = 25
+  pct agree=1.000  kappa=1.000  alpha=1.000
+
+-- RA vs Model stance --
+
+=== (C) AGREEMENT (dyad) reliability ===
+N coded -- Coder1: 197 ; Coder2: 101 (overlap on dyad: 100)
+RA-vs-RA agreement overlap: N = 100
+  pct agree=0.670  kappa=0.497  alpha=0.498
+
+-- AGREEMENT reliability summary --

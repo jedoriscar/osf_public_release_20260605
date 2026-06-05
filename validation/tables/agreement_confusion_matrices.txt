@@ -1,0 +1,29 @@
+Agreement confusion matrices (rows = first coder, cols = second)
+
+Coder1 vs Coder2  (N = 100 )
+          
+           agree disagree mixed neither unknown
+  agree       11        1     0       6       0
+  disagree     0       32     0       6       0
+  mixed        0        2     0       1       0
+  neither      3       10     0      24       0
+  unknown      2        0     0       2       0
+
+Coder1 vs Model  (N = 40 )
+          
+           agree disagree mixed neither unknown
+  agree        2        1     1       0       0
+  disagree     1       11     3       2       0
+  mixed        0        1     2       0       0
+  neither      3        4     1       8       0
+  unknown      0        0     0       0       0
+
+Coder2 vs Model  (N = 19 )
+          
+           agree disagree mixed neither unknown
+  agree        0        0     0       0       0
+  disagree     1        6     1       1       0
+  mixed        0        0     0       0       0
+  neither      0        4     2       4       0
+  unknown      0        0     0       0       0
+

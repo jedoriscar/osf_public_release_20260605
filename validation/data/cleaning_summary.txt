@@ -1,0 +1,24 @@
+=== RA Coding Sheet Cleaning ===
+Source: private RA coding worksheet (restricted; not included in public release)
+Run at: 2026-05-26 14:40:10 CDT
+
+== Feature coding ==
+  FEATURE_CODING_Coder1: dropped 1 rows with no comment_id (instruction/padding); kept 300
+  FEATURE_CODING_Coder2: dropped 1 rows with no comment_id (instruction/padding); kept 300
+  Coder1 coded comments:  300
+  Coder2 coded comments: 300
+  Comments in either:     300
+  Comments in BOTH (per-feature varies slightly): 300
+
+== Stance coding ==
+  STANCE_CODING_Coder1: dropped 1 rows with no comment_id; kept 300
+  STANCE_CODING_Coder2: dropped 1 rows with no comment_id; kept 300
+  Coder1 stance (non-NA):  32
+  Coder2 stance (non-NA): 25
+
+== Agreement coding ==
+  AGREEMENT_CODING_Coder1: dropped 1 rows with no child_comment_id; kept 300
+  AGREEMENT_CODING_Coder2: dropped 1 rows with no child_comment_id; kept 300
+  Coder1 agreement (non-NA):  197
+  Coder2 agreement (non-NA): 101
+

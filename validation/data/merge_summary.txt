@@ -1,0 +1,22 @@
+=== Merge RA codes with model predictions ===
+Run at: 2026-05-26 14:47:18 CDT
+
+Answer-key FEATURE rows: 400   |   RA wide rows: 300
+Loaded canonical probs for 101104 comments (cols: prob_compassion, prob_curiosity, prob_nuance, prob_personal_story, prob_reasoning, prob_toxicity, prob_identity_attack, prob_threat, prob_attack_on_author, prob_attack_on_commenter)
+After inner join with answer key: 300 rows
+  prob_compassion: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_curiosity: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_nuance: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_personal_story: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_reasoning: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_toxicity: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_identity_attack: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_threat: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_attack_on_author: mean|key-canon|=0.0000  max=0.0000  N=300
+  prob_attack_on_commenter: mean|key-canon|=0.0000  max=0.0000  N=300
+
+STANCE: RA rows (incl. NA codes) = 600 ; after join with key = 600
+
+AGREEMENT: RA rows = 600  | rows with any model label = 122
+  (low merge rate is expected: the agreement classifier was only run on 5,305 dyads,
+   and the manuscript-pass RA sample was drawn separately.)

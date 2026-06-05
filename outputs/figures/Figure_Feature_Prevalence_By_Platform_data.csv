@@ -1,0 +1,21 @@
+"feature","category","platform","prevalence_pct","n_above","n_total"
+"Compassion","Constructive","TikTok",31.4969223381499,7215,22907
+"Compassion","Constructive","YouTube",29.6792674817126,23208,78196
+"Curiosity","Constructive","TikTok",14.2183611996333,3257,22907
+"Curiosity","Constructive","YouTube",23.6124609954473,18464,78196
+"Nuance","Constructive","TikTok",0.314314401711267,72,22907
+"Nuance","Constructive","YouTube",14.5480587242314,11376,78196
+"Personal story","Constructive","TikTok",15.9078011088314,3644,22907
+"Personal story","Constructive","YouTube",16.6491892168397,13019,78196
+"Reasoning","Constructive","TikTok",0.654821670231807,150,22907
+"Reasoning","Constructive","YouTube",17.1952529541153,13446,78196
+"Toxicity","Destructive","TikTok",2.34426157942987,537,22907
+"Toxicity","Destructive","YouTube",3.76873497365594,2947,78196
+"Identity attack","Destructive","TikTok",0.711572881651897,163,22907
+"Identity attack","Destructive","YouTube",0.76986035091309,602,78196
+"Threat","Destructive","TikTok",0.034923822412363,8,22907
+"Threat","Destructive","YouTube",0.0306921070131465,24,78196
+"Attack on author","Destructive","TikTok",1.73746016501506,398,22907
+"Attack on author","Destructive","YouTube",2.97969205585963,2330,78196
+"Attack on commenter","Destructive","TikTok",14.7596804470249,3381,22907
+"Attack on commenter","Destructive","YouTube",16.5609494091769,12950,78196

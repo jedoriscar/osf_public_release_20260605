@@ -1,0 +1,23 @@
+Stance confusion matrices (rows = Coder1/Coder2, cols = comparator)
+
+Coder1 vs Coder2  (N = 25 )
+                 
+                  pro_diversity anti_diversity neutral_unclear
+  pro_diversity               4              0               0
+  anti_diversity              0              8               0
+  neutral_unclear             0              0              13
+
+Coder1 vs Model  (N = 32 )
+                 
+                  pro_diversity anti_diversity neutral_unclear
+  pro_diversity               3              1               0
+  anti_diversity              0              6               4
+  neutral_unclear             0              8              10
+
+Coder2 vs Model  (N = 25 )
+                 
+                  pro_diversity anti_diversity neutral_unclear
+  pro_diversity               3              1               0
+  anti_diversity              0              5               3
+  neutral_unclear             0              6               7
+

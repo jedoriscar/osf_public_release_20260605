@@ -1,0 +1,3 @@
+"thresholding","mean_constructive","mean_destructive","ratio_C_over_D"
+"original (all features @ 0.6)",0.18565423380116,0.0461707367733879,4.0210368466151
+"RA-calibrated (per-feature)",0.0736041462666717,0.00689395962533323,10.6766140602563
