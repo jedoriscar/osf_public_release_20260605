@@ -9,8 +9,9 @@
 #         - composite "constructiveness" (sum / mean of the 5 constructive
 #           features) and composite "destructiveness" (5 destructive features),
 #           comparing RA composite to model composite (ICC + Pearson r)
-#   (B) stance (pro / anti / neutral) -- *very small N, reported with caveat*
-#   (C) agreement in parent-child dyads (4 classes)
+#   (B) stance (pro / anti / neutral)
+#   (C) agreement in parent-child dyads, reported for the full four-category
+#       task and for the clear agree/disagree subset used in the manuscript
 #
 # Metrics used:
 #   - Binary features:  percent agreement, Cohen's kappa, Krippendorff's alpha
@@ -353,7 +354,62 @@ log(sprintf("  pct agree=%.3f  kappa=%.3f  alpha=%.3f",
 agree_levels <- c("agree","disagree","mixed","neither","unknown")
 cm_rara <- confusion_table(ag_pair$agree_coder1, ag_pair$agree_coder2, agree_levels)
 
-# RA vs model (only on rows where both exist)
+summarize_agreement_task <- function(task_label, allowed_levels) {
+  # RA vs RA
+  pair_sub <- ag_pair
+  if (!is.null(allowed_levels)) {
+    pair_sub <- pair_sub %>%
+      filter(agree_coder1 %in% allowed_levels,
+             agree_coder2 %in% allowed_levels)
+  }
+  res_pair <- nominal_agreement(pair_sub$agree_coder1, pair_sub$agree_coder2)
+  prf_pair <- per_class_prf(pair_sub$agree_coder1, pair_sub$agree_coder2,
+                            if (is.null(allowed_levels)) agree_levels else allowed_levels)
+  rows <- list(data.frame(
+    comparison = "Coder1_vs_Coder2",
+    task = task_label,
+    n = res_pair$n,
+    pct_agreement = res_pair$pct,
+    cohens_kappa = res_pair$kappa,
+    krippendorff_alpha = res_pair$alpha,
+    macro_f1 = prf_pair$macro_f1[1],
+    stringsAsFactors = FALSE
+  ))
+
+  # RA vs model
+  for (ra_label in c("Coder1","Coder2")) {
+    sub <- ag %>% filter(ra == !!ra_label, !is.na(agreement_RA), !is.na(agreement_ML))
+    if (!is.null(allowed_levels)) {
+      sub <- sub %>%
+        filter(agreement_RA %in% allowed_levels,
+               agreement_ML %in% allowed_levels)
+    }
+    if (nrow(sub) == 0) next
+    use_levels <- if (is.null(allowed_levels)) agree_levels else allowed_levels
+    res <- nominal_agreement(sub$agreement_RA, sub$agreement_ML)
+    prf <- per_class_prf(sub$agreement_RA, sub$agreement_ML, use_levels)
+    rows[[length(rows) + 1]] <- data.frame(
+      comparison = paste0(ra_label, "_vs_Model"),
+      task = task_label,
+      n = res$n,
+      pct_agreement = res$pct,
+      cohens_kappa = res$kappa,
+      krippendorff_alpha = res$alpha,
+      macro_f1 = prf$macro_f1[1],
+      stringsAsFactors = FALSE
+    )
+  }
+  bind_rows(rows)
+}
+
+agree_summary <- bind_rows(
+  summarize_agreement_task("all_4_categories", NULL),
+  summarize_agreement_task("agree_disagree_only", c("agree","disagree"))
+)
+log("\n-- AGREEMENT reliability summary --")
+print(agree_summary, row.names = FALSE)
+
+write.csv(agree_summary, file.path(TABLE_DIR, "agreement_reliability_summary.csv"), row.names = FALSE)
 agree_rows <- list()
 for (ra in c("Coder1","Coder2")) {
   sub <- ag %>% filter(ra == !!ra, !is.na(agreement_RA), !is.na(agreement_ML))
@@ -365,23 +421,6 @@ for (ra in c("Coder1","Coder2")) {
                            prf = prf,
                            cm = confusion_table(sub$agreement_RA, sub$agreement_ML, agree_levels))
 }
-agree_summary <- bind_rows(lapply(agree_rows, function(r) {
-  data.frame(ra = r$ra, n = r$n, pct_agreement = r$pct,
-             cohens_kappa = r$kappa, krippendorff_alpha = r$alpha,
-             macro_f1 = r$prf$macro_f1[1])
-}))
-agree_summary <- bind_rows(
-  data.frame(ra = "Coder1_vs_Coder2", n = res_rara$n,
-             pct_agreement = res_rara$pct,
-             cohens_kappa = res_rara$kappa,
-             krippendorff_alpha = res_rara$alpha,
-             macro_f1 = NA_real_),
-  agree_summary
-)
-log("\n-- AGREEMENT reliability summary --")
-print(agree_summary, row.names = FALSE)
-
-write.csv(agree_summary, file.path(TABLE_DIR, "agreement_reliability_summary.csv"), row.names = FALSE)
 agree_prf <- bind_rows(lapply(agree_rows, function(r) {
   data.frame(ra = r$ra, r$prf)
 }))

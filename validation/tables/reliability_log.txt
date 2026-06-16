@@ -10,15 +10,15 @@ Merged file rows: 300
 -- A.4 Composite-index reliability --
 
 === (B) STANCE reliability ===
-N coded -- Coder1: 32 ; Coder2: 25 (overlap on comment_id: 25)
-RA-vs-RA stance overlap: N = 25
-  pct agree=1.000  kappa=1.000  alpha=1.000
+N coded -- Coder1: 300 ; Coder2: 300 (overlap on comment_id: 300)
+RA-vs-RA stance overlap: N = 300
+  pct agree=0.657  kappa=0.434  alpha=0.423
 
 -- RA vs Model stance --
 
 === (C) AGREEMENT (dyad) reliability ===
-N coded -- Coder1: 197 ; Coder2: 101 (overlap on dyad: 100)
-RA-vs-RA agreement overlap: N = 100
-  pct agree=0.670  kappa=0.497  alpha=0.498
+N coded -- Coder1: 299 ; Coder2: 300 (overlap on dyad: 299)
+RA-vs-RA agreement overlap: N = 299
+  pct agree=0.699  kappa=0.524  alpha=0.524
 
 -- AGREEMENT reliability summary --

@@ -1,23 +1,23 @@
 Stance confusion matrices (rows = Coder1/Coder2, cols = comparator)
 
-Coder1 vs Coder2  (N = 25 )
+Coder1 vs Coder2  (N = 300 )
                  
                   pro_diversity anti_diversity neutral_unclear
-  pro_diversity               4              0               0
-  anti_diversity              0              8               0
-  neutral_unclear             0              0              13
+  pro_diversity              23              0              11
+  anti_diversity              4             62              12
+  neutral_unclear            37             39             112
 
-Coder1 vs Model  (N = 32 )
+Coder1 vs Model  (N = 300 )
                  
                   pro_diversity anti_diversity neutral_unclear
-  pro_diversity               3              1               0
-  anti_diversity              0              6               4
-  neutral_unclear             0              8              10
+  pro_diversity              21              4               9
+  anti_diversity              0             69               9
+  neutral_unclear            13             64             111
 
-Coder2 vs Model  (N = 25 )
+Coder2 vs Model  (N = 300 )
                  
                   pro_diversity anti_diversity neutral_unclear
-  pro_diversity               3              1               0
-  anti_diversity              0              5               3
-  neutral_unclear             0              6               7
+  pro_diversity              26             20              18
+  anti_diversity              1             79              21
+  neutral_unclear             7             38              90
 

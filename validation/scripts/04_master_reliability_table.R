@@ -239,11 +239,20 @@ nom <- bind_rows(
   nominal_row("Stance — Coder1 × Coder2",  st_pair$a, st_pair$b),
   nominal_row("Stance — Coder1 × Model",    st_so$stance_RA, st_so$stance_ML),
   nominal_row("Stance — Coder2 × Model",   st_sh$stance_RA, st_sh$stance_ML),
-  nominal_row("Agreement — Coder1 × Coder2", ag_pair$a, ag_pair$b),
-  nominal_row("Agreement — Coder1 × Model", (ag_so %>% filter(!is.na(agreement_ML)))$agreement_RA,
-                                            (ag_so %>% filter(!is.na(agreement_ML)))$agreement_ML),
-  nominal_row("Agreement — Coder2 × Model",(ag_sh %>% filter(!is.na(agreement_ML)))$agreement_RA,
-                                            (ag_sh %>% filter(!is.na(agreement_ML)))$agreement_ML)
+  nominal_row("Agreement all 4 — Coder1 × Coder2", ag_pair$a, ag_pair$b),
+  nominal_row("Agreement all 4 — Coder1 × Model", (ag_so %>% filter(!is.na(agreement_ML)))$agreement_RA,
+                                                  (ag_so %>% filter(!is.na(agreement_ML)))$agreement_ML),
+  nominal_row("Agreement all 4 — Coder2 × Model",(ag_sh %>% filter(!is.na(agreement_ML)))$agreement_RA,
+                                                  (ag_sh %>% filter(!is.na(agreement_ML)))$agreement_ML),
+  nominal_row("Agreement agree/disagree — Coder1 × Coder2",
+              (ag_pair %>% filter(a %in% c("agree","disagree"), b %in% c("agree","disagree")))$a,
+              (ag_pair %>% filter(a %in% c("agree","disagree"), b %in% c("agree","disagree")))$b),
+  nominal_row("Agreement agree/disagree — Coder1 × Model",
+              (ag_so %>% filter(!is.na(agreement_ML), agreement_RA %in% c("agree","disagree"), agreement_ML %in% c("agree","disagree")))$agreement_RA,
+              (ag_so %>% filter(!is.na(agreement_ML), agreement_RA %in% c("agree","disagree"), agreement_ML %in% c("agree","disagree")))$agreement_ML),
+  nominal_row("Agreement agree/disagree — Coder2 × Model",
+              (ag_sh %>% filter(!is.na(agreement_ML), agreement_RA %in% c("agree","disagree"), agreement_ML %in% c("agree","disagree")))$agreement_RA,
+              (ag_sh %>% filter(!is.na(agreement_ML), agreement_RA %in% c("agree","disagree"), agreement_ML %in% c("agree","disagree")))$agreement_ML)
 )
 write.csv(nom, file.path(TABLE_DIR, "nominal_reliability_master.csv"), row.names = FALSE)
 
